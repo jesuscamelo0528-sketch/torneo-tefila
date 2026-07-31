@@ -1,0 +1,1204 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Anton&family=VT323&family=Work+Sans:wght@400;500;600;700;800&display=swap');
+
+  :root{
+    --yellow:#F4C430;
+    --yellow-deep:#C98A00;
+    --red:#D62828;
+    --red-deep:#9E1B1B;
+    --blue:#2E86AB;
+    --green:#2F6B3A;
+    --ink:#211A0E;
+    --cream:#FBF3DE;
+    --cream-2:#F3E7C4;
+    --line: rgba(33,26,14,0.14);
+  }
+
+  *{box-sizing:border-box;}
+  .tf-root{
+    font-family:'Work Sans', sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(circle at 15% 8%, rgba(244,196,48,0.35), transparent 40%),
+      radial-gradient(circle at 90% 85%, rgba(46,134,171,0.18), transparent 45%),
+      var(--cream);
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+  }
+  .tf-root *{box-sizing:border-box;}
+
+  .tf-display{ font-family:'Anton', sans-serif; letter-spacing:0.02em; }
+  .tf-mono{ font-family:'VT323', monospace; }
+
+  /* ---------- textured field stripes background accent ---------- */
+  .tf-stripes{
+    position:absolute; inset:0; pointer-events:none; z-index:0;
+    background: repeating-linear-gradient(100deg,
+      rgba(47,107,58,0.05) 0px, rgba(47,107,58,0.05) 60px,
+      transparent 60px, transparent 120px);
+  }
+
+  /* ================= LOGIN ================= */
+  .tf-login{
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    padding:32px 18px; position:relative; z-index:1;
+  }
+  .tf-login-card{
+    width:100%; max-width:420px; text-align:center;
+    animation: tf-rise 0.7s ease both;
+  }
+  @keyframes tf-rise{ from{opacity:0; transform:translateY(18px);} to{opacity:1; transform:translateY(0);} }
+
+  .tf-crest{
+    width:150px; height:150px; margin:0 auto 18px;
+    position:relative;
+  }
+  .tf-crest svg{ width:100%; height:100%; filter: drop-shadow(0 10px 18px rgba(198,138,0,0.35)); }
+
+  .tf-brand{ font-size:2.1rem; line-height:1; color:var(--red-deep); margin:0 0 2px; }
+  .tf-brand-sub{ font-size:0.95rem; letter-spacing:0.18em; color:var(--green); text-transform:uppercase; font-weight:700; margin-bottom:22px;}
+
+  .tf-verse{ font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--yellow-deep); font-weight:700; margin-bottom:28px; opacity:0.9;}
+
+  .tf-field{
+    display:flex; flex-direction:column; gap:8px; text-align:left; margin-bottom:16px;
+  }
+  .tf-field label{ font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--ink); opacity:0.7;}
+  .tf-input{
+    width:100%; padding:14px 16px; border-radius:10px; border:2px solid var(--line);
+    background:#fff; font-size:1rem; font-family:inherit; color:var(--ink);
+    outline:none; transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .tf-input:focus{ border-color:var(--blue); box-shadow:0 0 0 3px rgba(46,134,171,0.15); }
+
+  .tf-btn{
+    appearance:none; border:none; cursor:pointer; font-family:'Anton', sans-serif;
+    letter-spacing:0.04em; font-size:1.05rem; padding:14px 20px; border-radius:10px;
+    width:100%; color:#fff; background:linear-gradient(180deg, var(--red) 0%, var(--red-deep) 100%);
+    box-shadow: 0 6px 0 var(--red-deep), 0 10px 16px rgba(158,27,27,0.25);
+    transition: transform 0.08s ease;
+  }
+  .tf-btn:active{ transform:translateY(4px); box-shadow:0 2px 0 var(--red-deep), 0 4px 10px rgba(158,27,27,0.25); }
+  .tf-btn:focus-visible{ outline:3px solid var(--blue); outline-offset:2px; }
+
+  .tf-admin-link{
+    margin-top:18px; font-size:0.8rem; color:var(--blue); background:none; border:none;
+    cursor:pointer; text-decoration:underline; font-family:inherit; opacity:0.85;
+  }
+  .tf-admin-link:focus-visible{ outline:2px solid var(--blue); outline-offset:2px; border-radius:4px;}
+
+  .tf-hint{ font-size:0.78rem; color:var(--ink); opacity:0.55; margin-top:10px; }
+
+  /* ---------- scoreboard welcome flash ---------- */
+  .tf-scoreboard{
+    position:fixed; inset:0; z-index:50; background:#0c1a0f;
+    display:flex; align-items:center; justify-content:center; flex-direction:column;
+    animation: tf-fadeout 0.5s ease 1.9s forwards;
+  }
+  @keyframes tf-fadeout{ to{ opacity:0; visibility:hidden; } }
+  .tf-scoreboard-panel{
+    background:#0f2413; border:6px solid #163019; border-radius:6px;
+    padding:34px 44px; box-shadow: inset 0 0 40px rgba(0,0,0,0.6);
+  }
+  .tf-sb-label{ font-family:'VT323', monospace; font-size:1.1rem; color:#5fbf6a; text-align:center; letter-spacing:0.3em; opacity:0.85;}
+  .tf-sb-team{
+    font-family:'VT323', monospace; font-size:3.2rem; color:#ffd23f; text-align:center;
+    letter-spacing:0.06em; text-shadow:0 0 12px rgba(255,210,63,0.65);
+    animation: tf-flicker 0.15s steps(2) 3;
+    max-width:90vw; overflow-wrap:break-word;
+  }
+  @keyframes tf-flicker{ 0%,100%{opacity:1;} 50%{opacity:0.35;} }
+
+  /* ================= APP SHELL ================= */
+  .tf-app{ position:relative; z-index:1; min-height:100vh; padding-bottom:60px; }
+
+  .tf-header{
+    background:linear-gradient(180deg, var(--yellow) 0%, var(--yellow-deep) 100%);
+    padding:16px 20px; display:flex; align-items:center; justify-content:space-between; gap:12px;
+    box-shadow:0 4px 14px rgba(198,138,0,0.25); flex-wrap:wrap;
+  }
+  .tf-header-left{ display:flex; align-items:center; gap:12px; }
+  .tf-header-crest{ width:42px; height:42px; flex-shrink:0; }
+  .tf-header-title{ font-family:'Anton',sans-serif; font-size:1.3rem; color:var(--red-deep); line-height:1.05; }
+  .tf-header-title small{ display:block; font-family:'Work Sans',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.12em; color:var(--ink); text-transform:uppercase; opacity:0.75; }
+
+  .tf-header-right{ display:flex; align-items:center; gap:10px; }
+  .tf-badge{
+    background:#fff; border-radius:999px; padding:8px 14px; font-size:0.82rem; font-weight:700;
+    color:var(--red-deep); border:2px solid rgba(158,27,27,0.25); display:flex; align-items:center; gap:6px;
+  }
+  .tf-icon-btn{
+    background:rgba(255,255,255,0.55); border:2px solid rgba(255,255,255,0.7); cursor:pointer;
+    border-radius:999px; width:38px; height:38px; display:flex; align-items:center; justify-content:center;
+    font-size:1rem; transition:background 0.15s;
+  }
+  .tf-icon-btn:hover{ background:#fff; }
+  .tf-icon-btn:focus-visible{ outline:3px solid var(--blue); outline-offset:2px; }
+
+  .tf-tabs{
+    display:flex; gap:6px; padding:14px 20px 0; max-width:920px; margin:0 auto; flex-wrap:wrap;
+  }
+  .tf-tab{
+    font-family:'Anton',sans-serif; letter-spacing:0.03em; font-size:0.92rem; padding:10px 18px;
+    border-radius:10px 10px 0 0; cursor:pointer; border:none; background:transparent; color:var(--ink); opacity:0.55;
+    transition:opacity 0.15s, background 0.15s;
+  }
+  .tf-tab[aria-selected="true"]{ opacity:1; background:#fff; box-shadow:0 -3px 10px rgba(0,0,0,0.06); }
+  .tf-tab:hover{ opacity:0.85; }
+  .tf-tab:focus-visible{ outline:3px solid var(--blue); outline-offset:2px; }
+
+  .tf-panel{
+    max-width:920px; margin:0 auto; background:#fff; border-radius:0 12px 12px 12px;
+    padding:22px; box-shadow:0 8px 26px rgba(33,26,14,0.08); min-height:340px;
+  }
+  @media (max-width:640px){ .tf-panel{ border-radius:12px; margin:0 12px; } .tf-tabs{padding:14px 12px 0;} }
+
+  .tf-section-title{ font-family:'Anton',sans-serif; font-size:1.25rem; color:var(--ink); margin:0 0 4px; }
+  .tf-section-sub{ font-size:0.85rem; color:var(--ink); opacity:0.6; margin:0 0 18px; }
+
+  /* ---------- standings table ---------- */
+  .tf-table-wrap{ overflow-x:auto; }
+  table.tf-table{ width:100%; border-collapse:collapse; font-size:0.88rem; min-width:560px; }
+  table.tf-table th{
+    font-family:'Anton',sans-serif; font-weight:400; letter-spacing:0.02em; font-size:0.78rem;
+    text-transform:uppercase; color:#fff; background:var(--green); padding:10px 8px; text-align:center;
+  }
+  table.tf-table th:first-child{ text-align:left; border-radius:8px 0 0 0; padding-left:14px;}
+  table.tf-table th:last-child{ border-radius:0 8px 0 0; }
+  table.tf-table td{ padding:10px 8px; text-align:center; border-bottom:1px solid var(--line); }
+  table.tf-table td:first-child{ text-align:left; font-weight:700; padding-left:14px; }
+  table.tf-table tr:nth-child(odd) td{ background:rgba(244,196,48,0.06); }
+  table.tf-table tr.tf-my-team td{ background:rgba(46,134,171,0.12); }
+  table.tf-table td.tf-pts{ font-weight:800; color:var(--red-deep); }
+  .tf-pos-num{
+    display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px;
+    border-radius:50%; background:var(--ink); color:#fff; font-size:0.72rem; font-weight:700; margin-right:8px;
+  }
+  tr:nth-child(1) .tf-pos-num{ background:var(--yellow-deep); }
+  tr:nth-child(2) .tf-pos-num{ background:#9aa0a6; }
+  tr:nth-child(3) .tf-pos-num{ background:#a9652e; }
+
+  /* ---------- scorers ---------- */
+  .tf-scorer-row{
+    display:flex; align-items:center; gap:14px; padding:12px 10px; border-bottom:1px solid var(--line);
+  }
+  .tf-scorer-rank{
+    font-family:'Anton',sans-serif; font-size:1.1rem; width:30px; text-align:center; color:var(--ink); opacity:0.5;
+  }
+  .tf-scorer-row:nth-child(1) .tf-scorer-rank{ color:var(--yellow-deep); opacity:1; font-size:1.3rem; }
+  .tf-scorer-info{ flex:1; min-width:0; }
+  .tf-scorer-name{ font-weight:700; font-size:0.95rem; }
+  .tf-scorer-team{ font-size:0.78rem; color:var(--ink); opacity:0.6; }
+  .tf-scorer-goals{
+    font-family:'Anton',sans-serif; font-size:1.4rem; color:var(--red-deep); display:flex; align-items:baseline; gap:4px;
+  }
+  .tf-scorer-goals span{ font-family:'Work Sans',sans-serif; font-size:0.68rem; font-weight:700; opacity:0.55; text-transform:uppercase;}
+
+  /* ---------- teams / rosters ---------- */
+  .tf-team-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:14px; }
+  .tf-team-card{
+    border:2px solid var(--line); border-radius:12px; padding:16px; cursor:pointer; background:var(--cream);
+    transition: border-color 0.15s, transform 0.1s;
+  }
+  .tf-team-card:hover{ border-color:var(--blue); }
+  .tf-team-card:focus-visible{ outline:3px solid var(--blue); outline-offset:2px; }
+  .tf-team-card.tf-open{ border-color:var(--red); background:#fff; }
+  .tf-team-card-head{ display:flex; align-items:center; justify-content:space-between; }
+  .tf-team-name{ font-family:'Anton',sans-serif; font-size:1.05rem; }
+  .tf-team-count{ font-size:0.75rem; opacity:0.6; }
+  .tf-roster{ margin-top:12px; display:flex; flex-direction:column; gap:6px; }
+  .tf-player{ display:flex; align-items:center; gap:10px; font-size:0.88rem; }
+  .tf-player-num{
+    width:26px; height:26px; border-radius:6px; background:var(--red); color:#fff; font-weight:800;
+    display:flex; align-items:center; justify-content:center; font-size:0.75rem; flex-shrink:0;
+  }
+  .tf-empty{ font-size:0.85rem; opacity:0.55; padding:20px 4px; text-align:center; }
+
+  /* ---------- team avatars / photos ---------- */
+  .tf-avatar{ width:36px; height:36px; border-radius:50%; object-fit:cover; border:2px solid var(--line); flex-shrink:0; background:#fff; }
+  .tf-avatar-ph{
+    width:36px; height:36px; border-radius:50%; background:var(--yellow); color:var(--red-deep);
+    display:flex; align-items:center; justify-content:center; font-family:'Anton',sans-serif; font-size:0.95rem; flex-shrink:0;
+  }
+  .tf-avatar-lg{ width:100px; height:100px; border-radius:50%; object-fit:cover; border:3px solid var(--yellow-deep); background:#fff; }
+  .tf-avatar-lg-ph{
+    width:100px; height:100px; border-radius:50%; background:var(--yellow); color:var(--red-deep);
+    display:flex; align-items:center; justify-content:center; font-family:'Anton',sans-serif; font-size:2.4rem; border:3px solid var(--yellow-deep);
+  }
+  .tf-avatar-row{ display:flex; align-items:center; gap:10px; }
+  .tf-avatar-sm-wrap{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+
+  /* ---------- perfil (user profile) ---------- */
+  .tf-profile-head{ display:flex; align-items:center; gap:16px; margin-bottom:20px; flex-wrap:wrap; }
+  .tf-profile-name{ font-family:'Anton',sans-serif; font-size:1.4rem; }
+  .tf-profile-pos{ font-size:0.85rem; opacity:0.65; }
+  .tf-stat-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:20px; }
+  @media (max-width:480px){ .tf-stat-grid{ grid-template-columns:repeat(3,1fr); } }
+  .tf-stat-box{ background:var(--cream-2); border-radius:10px; padding:10px 6px; text-align:center; }
+  .tf-stat-box b{ display:block; font-family:'Anton',sans-serif; font-size:1.2rem; color:var(--red-deep); }
+  .tf-stat-box span{ font-size:0.68rem; text-transform:uppercase; opacity:0.6; font-weight:700; }
+
+  /* ---------- eliminatorias / bracket ---------- */
+  .tf-bracket-stage{ margin-bottom:22px; }
+  .tf-bracket-stage h4{ font-family:'Anton',sans-serif; font-size:1rem; margin:0 0 10px; color:var(--green); }
+  .tf-match-card{
+    border:1px solid var(--line); border-radius:10px; padding:10px 12px; margin-bottom:8px;
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  }
+  .tf-match-team{ display:flex; align-items:center; gap:6px; font-weight:700; font-size:0.9rem; flex:1; min-width:100px; }
+  .tf-match-team.tf-winner{ color:var(--red-deep); }
+  .tf-match-team.tf-winner::after{ content:'🏆'; font-size:0.75rem; }
+  .tf-match-vs{ font-size:0.72rem; opacity:0.5; font-weight:700; text-transform:uppercase; }
+  .tf-match-score-tag{
+    font-family:'Anton',sans-serif; font-size:1rem; padding:3px 10px; background:var(--cream-2); border-radius:6px; white-space:nowrap;
+  }
+  .tf-match-admin-row{ border:1px solid var(--line); border-radius:10px; padding:10px 12px; margin-bottom:10px; }
+  .tf-match-admin-teams{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
+  .tf-match-admin-teams select{ flex:1; min-width:120px; }
+  .tf-match-admin-scores{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .tf-match-admin-scores input{ max-width:70px; flex:0 0 70px; }
+
+  /* ---------- admin ---------- */
+  .tf-admin-fab{
+    position:fixed; bottom:18px; right:18px; z-index:20;
+    width:48px; height:48px; border-radius:50%; background:var(--ink); color:var(--yellow);
+    border:none; cursor:pointer; font-size:1.2rem; box-shadow:0 6px 18px rgba(0,0,0,0.3);
+  }
+  .tf-admin-fab:focus-visible{ outline:3px solid var(--blue); outline-offset:2px; }
+
+  .tf-modal-bg{
+    position:fixed; inset:0; background:rgba(20,15,5,0.55); z-index:40;
+    display:flex; align-items:center; justify-content:center; padding:16px;
+  }
+  .tf-modal{
+    background:#fff; border-radius:14px; max-width:520px; width:100%; padding:26px;
+    max-height:85vh; overflow-y:auto;
+  }
+  .tf-modal h3{ font-family:'Anton',sans-serif; margin:0 0 14px; font-size:1.15rem; }
+  .tf-modal-close{
+    float:right; background:none; border:none; cursor:pointer; font-size:1.3rem; color:var(--ink); opacity:0.5; line-height:1;
+  }
+  .tf-modal-close:focus-visible{ outline:2px solid var(--blue); }
+
+  .tf-admin-tabs{ display:flex; gap:6px; margin-bottom:16px; flex-wrap:wrap; }
+  .tf-admin-tab{
+    font-size:0.78rem; font-weight:700; padding:7px 12px; border-radius:8px; border:2px solid var(--line);
+    background:#fff; cursor:pointer; color:var(--ink);
+  }
+  .tf-admin-tab[aria-selected="true"]{ background:var(--ink); color:var(--yellow); border-color:var(--ink); }
+
+  .tf-form-row{ display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap; }
+  .tf-form-row .tf-input{ padding:9px 10px; font-size:0.88rem; flex:1; min-width:80px; }
+  .tf-mini-btn{
+    background:var(--green); color:#fff; border:none; border-radius:8px; padding:9px 14px; font-weight:700;
+    font-size:0.82rem; cursor:pointer; white-space:nowrap;
+  }
+  .tf-mini-btn.tf-del{ background:var(--red-deep); }
+  .tf-mini-btn:focus-visible{ outline:2px solid var(--blue); }
+
+  .tf-list-row{
+    display:flex; align-items:center; justify-content:space-between; gap:8px; padding:8px 4px;
+    border-bottom:1px solid var(--line); font-size:0.85rem;
+  }
+  .tf-list-row-actions{ display:flex; gap:6px; }
+  .tf-select{ padding:9px 10px; border-radius:8px; border:2px solid var(--line); font-family:inherit; font-size:0.88rem; }
+
+  .tf-footer{
+    text-align:center; padding:26px 16px 8px; font-size:0.75rem; color:var(--ink); opacity:0.55;
+  }
+
+  .tf-loading{ text-align:center; padding:60px 20px; opacity:0.6; font-size:0.9rem; }
+  .tf-error-banner{
+    background:#fdecec; border:1px solid rgba(214,40,40,0.35); color:var(--red-deep); padding:10px 14px;
+    border-radius:8px; font-size:0.82rem; margin-bottom:14px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .tf-login-card, .tf-scoreboard, .tf-sb-team{ animation:none !important; }
+  }
+</style>
+
+<div class="tf-root" id="tf-root">
+  <div class="tf-stripes"></div>
+  <div id="tf-mount"></div>
+</div>
+
+<script>
+(function(){
+  const mount = document.getElementById('tf-mount');
+  const STORAGE_KEY = 'tefila-fc-tournament';
+  const ADMIN_PASS = 'tefila2026';
+
+  const STAGES = [
+    { key:'octavos', label:'Octavos de final' },
+    { key:'cuartos', label:'Cuartos de final' },
+    { key:'semifinal', label:'Semifinal' },
+    { key:'final', label:'Final' }
+  ];
+
+  const defaultData = {
+    teams: [
+      { id: 't-tefila', name: 'Tefila F.C.', players: [], photo: null }
+    ],
+    standings: [
+      { teamId: 't-tefila', pj:0, pg:0, pe:0, pp:0, gf:0, gc:0 }
+    ],
+    scorers: [],
+    bracket: { octavos: [], cuartos: [], semifinal: [], final: [] }
+  };
+
+  let state = {
+    data: null,
+    loading: true,
+    error: null,
+    currentTeamName: null,   // set after login
+    showScoreboard: false,
+    activeTab: 'posiciones',
+    openTeamId: null,
+    adminOpen: false,
+    adminUnlocked: false,
+    adminTab: 'equipos',
+    adminPassInput: '',
+    adminError: ''
+  };
+
+  function esc(s){
+    return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  function uid(prefix){ return prefix + '-' + Math.random().toString(36).slice(2,9); }
+
+  function initials(name){
+    return String(name||'?').trim().split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+  }
+
+  function avatarHTML(team, size){
+    const cls = size==='lg' ? 'tf-avatar-lg' : 'tf-avatar';
+    const clsPh = size==='lg' ? 'tf-avatar-lg-ph' : 'tf-avatar-ph';
+    if(team && team.photo){
+      return `<img class="${cls}" src="${team.photo}" alt="Foto de ${esc(team.name)}" />`;
+    }
+    return `<div class="${clsPh}">${esc(initials(team ? team.name : '?'))}</div>`;
+  }
+
+  function resizeImageFile(file, maxDim){
+    return new Promise((resolve, reject) => {
+      if(!file || !file.type.startsWith('image/')){ reject(new Error('Archivo no es una imagen')); return; }
+      const reader = new FileReader();
+      reader.onerror = () => reject(new Error('No se pudo leer el archivo'));
+      reader.onload = e => {
+        const img = new Image();
+        img.onerror = () => reject(new Error('No se pudo leer la imagen'));
+        img.onload = () => {
+          let w = img.width, h = img.height;
+          if(w > h){ if(w > maxDim){ h = Math.round(h * maxDim / w); w = maxDim; } }
+          else { if(h > maxDim){ w = Math.round(w * maxDim / h); h = maxDim; } }
+          const canvas = document.createElement('canvas');
+          canvas.width = w; canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          resolve(canvas.toDataURL('image/jpeg', 0.82));
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async function loadData(){
+    try{
+      const res = await window.storage.get(STORAGE_KEY, true);
+      state.data = res ? JSON.parse(res.value) : defaultData;
+    }catch(e){
+      state.data = defaultData;
+    }
+    if(!state.data.bracket){
+      state.data.bracket = { octavos: [], cuartos: [], semifinal: [], final: [] };
+    }
+    STAGES.forEach(st => { if(!Array.isArray(state.data.bracket[st.key])) state.data.bracket[st.key] = []; });
+    state.loading = false;
+    render();
+  }
+
+  async function saveData(){
+    try{
+      await window.storage.set(STORAGE_KEY, JSON.stringify(state.data), true);
+    }catch(e){
+      state.error = 'No se pudo guardar. Intenta de nuevo.';
+    }
+  }
+
+  function teamById(id){ return state.data.teams.find(t => t.id === id); }
+  function standingFor(teamId){
+    let s = state.data.standings.find(s => s.teamId === teamId);
+    if(!s){ s = { teamId, pj:0, pg:0, pe:0, pp:0, gf:0, gc:0 }; state.data.standings.push(s); }
+    return s;
+  }
+
+  function sortedStandings(){
+    return state.data.teams.map(t => {
+      const s = state.data.standings.find(s => s.teamId === t.id) || {pj:0,pg:0,pe:0,pp:0,gf:0,gc:0};
+      const pts = (s.pg||0)*3 + (s.pe||0);
+      const dif = (s.gf||0) - (s.gc||0);
+      return { team:t, s, pts, dif };
+    }).sort((a,b) => b.pts - a.pts || b.dif - a.dif || (b.s.gf||0) - (a.s.gf||0));
+  }
+
+  function sortedScorers(){
+    return [...state.data.scorers].sort((a,b) => (b.goals||0) - (a.goals||0));
+  }
+
+  function findTeamByNameLoose(name){
+    const n = name.trim().toLowerCase();
+    return state.data.teams.find(t => t.name.trim().toLowerCase() === n);
+  }
+
+  /* ---------------- render ---------------- */
+  function render(){
+    if(state.loading){
+      mount.innerHTML = `<div class="tf-loading">Cargando torneo…</div>`;
+      return;
+    }
+    if(!state.currentTeamName){
+      renderLogin();
+    } else {
+      renderApp();
+    }
+  }
+
+  function crestSVG(size){
+    return `<svg viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 4 L92 16 V54 C92 82 74 100 50 108 C26 100 8 82 8 54 V16 Z" fill="url(#tfg)" stroke="#9E1B1B" stroke-width="2"/>
+      <defs>
+        <linearGradient id="tfg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#F7D24A"/>
+          <stop offset="100%" stop-color="#D89A00"/>
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="46" r="15" fill="none" stroke="#211A0E" stroke-width="3"/>
+      <path d="M42 40 L50 34 L58 40 L55 52 L45 52 Z" fill="#211A0E"/>
+      <rect x="30" y="70" width="40" height="16" rx="2" fill="#2E86AB" stroke="#1c5c78" stroke-width="1.5"/>
+      <text x="50" y="82" text-anchor="middle" font-family="Anton, sans-serif" font-size="9" fill="#D62828">TEFILA</text>
+    </svg>`;
+  }
+
+  function renderLogin(){
+    mount.innerHTML = `
+      <div class="tf-login">
+        <div class="tf-login-card">
+          <div class="tf-crest">${crestSVG()}</div>
+          <h1 class="tf-display tf-brand">TORNEO TEFILA F.C.</h1>
+          <div class="tf-brand-sub">Escuela de fútbol</div>
+          <div class="tf-verse">Amarás a Dios sobre todas las cosas</div>
+          <form id="tf-login-form">
+            <div class="tf-field">
+              <label for="tf-team-input">Nombre de tu equipo</label>
+              <input class="tf-input" id="tf-team-input" type="text" placeholder="Ej: Tefila F.C." autocomplete="off" required />
+            </div>
+            <button class="tf-btn" type="submit">Ingresar al torneo</button>
+          </form>
+          <div class="tf-hint">Escribe el nombre de tu equipo para entrar y ver la tabla, los goleadores y los planteles.</div>
+          <button class="tf-admin-link" id="tf-admin-link" type="button">¿Eres el organizador? Entra como administrador</button>
+        </div>
+      </div>
+    `;
+    document.getElementById('tf-login-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const val = document.getElementById('tf-team-input').value.trim();
+      if(!val) return;
+      loginAs(val);
+    });
+    document.getElementById('tf-admin-link').addEventListener('click', () => {
+      openAdminModal(true);
+    });
+  }
+
+  function loginAs(name){
+    state.currentTeamName = name;
+    state.showScoreboard = true;
+    render();
+    const overlay = document.getElementById('tf-scoreboard-overlay');
+    if(overlay){
+      setTimeout(() => { state.showScoreboard = false; render(); }, 2450);
+    }
+  }
+
+  function renderScoreboard(){
+    return `
+      <div class="tf-scoreboard" id="tf-scoreboard-overlay">
+        <div class="tf-scoreboard-panel">
+          <div class="tf-sb-label">BIENVENIDO AL TORNEO</div>
+          <div class="tf-sb-team">${esc(state.currentTeamName.toUpperCase())}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderApp(){
+    const matched = findTeamByNameLoose(state.currentTeamName);
+    mount.innerHTML = `
+      ${state.showScoreboard ? renderScoreboard() : ''}
+      <div class="tf-app">
+        <header class="tf-header">
+          <div class="tf-header-left">
+            <div class="tf-header-crest">${crestSVG()}</div>
+            <div class="tf-header-title">TORNEO TEFILA F.C.<small>Escuela de fútbol</small></div>
+          </div>
+          <div class="tf-header-right">
+            <div class="tf-badge">${matched && matched.photo ? `<img class="tf-avatar" style="width:20px;height:20px;" src="${matched.photo}" alt="" />` : '⚽'} ${esc(state.currentTeamName)}</div>
+            <button class="tf-icon-btn" id="tf-logout-btn" title="Salir" aria-label="Salir">↩</button>
+          </div>
+        </header>
+
+        <nav class="tf-tabs" role="tablist">
+          ${tabBtn('posiciones','Posiciones')}
+          ${tabBtn('eliminatorias','Eliminatorias')}
+          ${tabBtn('goleadores','Goleadores')}
+          ${tabBtn('equipos','Equipos')}
+          ${tabBtn('perfil','Mi perfil')}
+        </nav>
+
+        <section class="tf-panel">
+          ${state.error ? `<div class="tf-error-banner">${esc(state.error)}</div>` : ''}
+          ${state.activeTab === 'posiciones' ? renderStandingsPanel(matched) : ''}
+          ${state.activeTab === 'eliminatorias' ? renderBracketPanel() : ''}
+          ${state.activeTab === 'goleadores' ? renderScorersPanel() : ''}
+          ${state.activeTab === 'equipos' ? renderTeamsPanel() : ''}
+          ${state.activeTab === 'perfil' ? renderProfilePanel(matched) : ''}
+        </section>
+
+        <div class="tf-footer">Torneo organizado por Tefila F.C. — "Amarás a Dios sobre todas las cosas"</div>
+      </div>
+      <button class="tf-admin-fab" id="tf-admin-fab" title="Panel del organizador" aria-label="Panel del organizador">⚙</button>
+      ${state.adminOpen ? renderAdminModal() : ''}
+    `;
+    bindAppEvents(matched);
+  }
+
+  function tabBtn(id, label){
+    return `<button class="tf-tab" role="tab" aria-selected="${state.activeTab===id}" data-tab="${id}">${esc(label)}</button>`;
+  }
+
+  function renderStandingsPanel(matchedTeam){
+    const rows = sortedStandings();
+    if(rows.length === 0){
+      return `<h2 class="tf-section-title">Tabla de posiciones</h2><div class="tf-empty">Aún no hay equipos registrados.</div>`;
+    }
+    return `
+      <h2 class="tf-section-title">Tabla de posiciones</h2>
+      <p class="tf-section-sub">PJ: jugados · PG: ganados · PE: empatados · PP: perdidos · GF/GC: goles a favor / en contra · DIF: diferencia · PTS: puntos</p>
+      <div class="tf-table-wrap">
+        <table class="tf-table">
+          <thead><tr>
+            <th>Equipo</th><th>PJ</th><th>PG</th><th>PE</th><th>PP</th><th>GF</th><th>GC</th><th>DIF</th><th>PTS</th>
+          </tr></thead>
+          <tbody>
+            ${rows.map((r,i) => `
+              <tr class="${matchedTeam && r.team.id===matchedTeam.id ? 'tf-my-team' : ''}">
+                <td><span class="tf-pos-num">${i+1}</span>${esc(r.team.name)}</td>
+                <td>${r.s.pj||0}</td><td>${r.s.pg||0}</td><td>${r.s.pe||0}</td><td>${r.s.pp||0}</td>
+                <td>${r.s.gf||0}</td><td>${r.s.gc||0}</td><td>${r.dif>0?'+':''}${r.dif}</td>
+                <td class="tf-pts">${r.pts}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  function renderScorersPanel(){
+    const rows = sortedScorers();
+    if(rows.length === 0){
+      return `<h2 class="tf-section-title">Goleadores</h2><div class="tf-empty">Todavía no hay goles registrados.</div>`;
+    }
+    return `
+      <h2 class="tf-section-title">Tabla de goleadores</h2>
+      <p class="tf-section-sub">Jugadores con más goles en el torneo</p>
+      <div>
+        ${rows.map((s,i) => `
+          <div class="tf-scorer-row">
+            <div class="tf-scorer-rank">${i+1}</div>
+            <div class="tf-scorer-info">
+              <div class="tf-scorer-name">${esc(s.player)}</div>
+              <div class="tf-scorer-team">${esc(teamNameById(s.teamId))}</div>
+            </div>
+            <div class="tf-scorer-goals">${s.goals||0} <span>goles</span></div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  function teamNameById(id){
+    const t = teamById(id);
+    return t ? t.name : 'Equipo';
+  }
+
+  function teamOptionsHTML(selectedId){
+    return `<option value="">Por definir</option>` +
+      state.data.teams.map(t => `<option value="${t.id}" ${t.id===selectedId?'selected':''}>${esc(t.name)}</option>`).join('');
+  }
+
+  function matchWinnerId(match){
+    if(match.winnerId) return match.winnerId;
+    if(match.teamAId && match.teamBId && match.scoreA !== null && match.scoreA !== '' && match.scoreB !== null && match.scoreB !== ''){
+      const a = Number(match.scoreA), b = Number(match.scoreB);
+      if(a !== b) return a > b ? match.teamAId : match.teamBId;
+    }
+    return null;
+  }
+
+  function findMatch(stageKey, matchId){
+    const arr = state.data.bracket[stageKey] || [];
+    return arr.find(m => m.id === matchId);
+  }
+
+  function renderTeamsPanel(){
+    const teams = state.data.teams;
+    if(teams.length === 0){
+      return `<h2 class="tf-section-title">Equipos</h2><div class="tf-empty">Aún no hay equipos registrados.</div>`;
+    }
+    return `
+      <h2 class="tf-section-title">Equipos y jugadores</h2>
+      <p class="tf-section-sub">Toca un equipo para ver su plantel</p>
+      <div class="tf-team-grid">
+        ${teams.map(t => `
+          <div class="tf-team-card ${state.openTeamId===t.id?'tf-open':''}" data-team-toggle="${t.id}" tabindex="0" role="button" aria-expanded="${state.openTeamId===t.id}">
+            <div class="tf-team-card-head">
+              <div class="tf-avatar-row">
+                ${avatarHTML(t)}
+                <div class="tf-team-name">${esc(t.name)}</div>
+              </div>
+              <div class="tf-team-count">${t.players.length} jugador${t.players.length===1?'':'es'}</div>
+            </div>
+            ${state.openTeamId===t.id ? `
+              <div class="tf-roster">
+                ${t.players.length === 0 ? '<div class="tf-empty">Sin jugadores registrados</div>' :
+                  t.players.map(p => `
+                    <div class="tf-player"><span class="tf-player-num">${esc(p.number||'-')}</span>${esc(p.name)}</div>
+                  `).join('')}
+              </div>
+            ` : ''}
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  function renderBracketPanel(){
+    const hasAny = STAGES.some(st => (state.data.bracket[st.key]||[]).length > 0);
+    if(!hasAny){
+      return `<h2 class="tf-section-title">Eliminatorias</h2><div class="tf-empty">El organizador todavía no ha definido los cruces de eliminatorias.</div>`;
+    }
+    return `
+      <h2 class="tf-section-title">Eliminatorias</h2>
+      <p class="tf-section-sub">Cruces del torneo, desde octavos hasta la final</p>
+      ${STAGES.map(st => {
+        const matches = state.data.bracket[st.key] || [];
+        if(matches.length === 0) return '';
+        return `
+          <div class="tf-bracket-stage">
+            <h4>${esc(st.label)}</h4>
+            ${matches.map(m => renderMatchCard(m)).join('')}
+          </div>
+        `;
+      }).join('')}
+    `;
+  }
+
+  function renderMatchCard(m){
+    const winnerId = matchWinnerId(m);
+    const nameA = m.teamAId ? teamNameById(m.teamAId) : 'Por definir';
+    const nameB = m.teamBId ? teamNameById(m.teamBId) : 'Por definir';
+    const scoreShown = (m.scoreA !== null && m.scoreA !== '' && m.scoreB !== null && m.scoreB !== '');
+    return `
+      <div class="tf-match-card">
+        <div class="tf-match-team ${winnerId && winnerId===m.teamAId ? 'tf-winner':''}">${esc(nameA)}</div>
+        ${scoreShown ? `<div class="tf-match-score-tag">${m.scoreA} — ${m.scoreB}</div>` : `<div class="tf-match-vs">vs</div>`}
+        <div class="tf-match-team ${winnerId && winnerId===m.teamBId ? 'tf-winner':''}">${esc(nameB)}</div>
+      </div>
+    `;
+  }
+
+  function renderProfilePanel(matchedTeam){
+    if(!matchedTeam){
+      return `
+        <h2 class="tf-section-title">Mi perfil</h2>
+        <div class="tf-empty">
+          No encontramos un equipo registrado con el nombre "${esc(state.currentTeamName)}".<br>
+          Pídele al organizador que verifique el nombre exacto de tu equipo.
+        </div>
+      `;
+    }
+    const s = standingFor(matchedTeam.id);
+    const sorted = sortedStandings();
+    const posIndex = sorted.findIndex(r => r.team.id === matchedTeam.id);
+    const pos = posIndex >= 0 ? posIndex + 1 : '-';
+    const pts = (s.pg||0)*3 + (s.pe||0);
+    const dif = (s.gf||0) - (s.gc||0);
+    return `
+      <h2 class="tf-section-title">Mi perfil</h2>
+      <p class="tf-section-sub">Información de tu equipo en el torneo</p>
+      <div class="tf-profile-head">
+        ${avatarHTML(matchedTeam, 'lg')}
+        <div>
+          <div class="tf-profile-name">${esc(matchedTeam.name)}</div>
+          <div class="tf-profile-pos">Posición actual: #${pos} · ${matchedTeam.players.length} jugador${matchedTeam.players.length===1?'':'es'}</div>
+        </div>
+      </div>
+      <div class="tf-stat-grid">
+        <div class="tf-stat-box"><b>${s.pj||0}</b><span>PJ</span></div>
+        <div class="tf-stat-box"><b>${s.pg||0}</b><span>PG</span></div>
+        <div class="tf-stat-box"><b>${s.pe||0}</b><span>PE</span></div>
+        <div class="tf-stat-box"><b>${s.pp||0}</b><span>PP</span></div>
+        <div class="tf-stat-box"><b>${s.gf||0}</b><span>GF</span></div>
+        <div class="tf-stat-box"><b>${s.gc||0}</b><span>GC</span></div>
+        <div class="tf-stat-box"><b>${dif>0?'+':''}${dif}</b><span>DIF</span></div>
+        <div class="tf-stat-box"><b>${pts}</b><span>PTS</span></div>
+      </div>
+      <h3 class="tf-section-title" style="font-size:1rem;">Plantel</h3>
+      ${matchedTeam.players.length ? `
+        <div class="tf-roster">
+          ${matchedTeam.players.map(p => `
+            <div class="tf-player"><span class="tf-player-num">${esc(p.number||'-')}</span>${esc(p.name)}</div>
+          `).join('')}
+        </div>
+      ` : '<div class="tf-empty">Aún no hay jugadores registrados en tu equipo. Pídele al organizador que los agregue.</div>'}
+    `;
+  }
+
+  function bindAppEvents(matchedTeam){
+    document.getElementById('tf-logout-btn').addEventListener('click', () => {
+      state.currentTeamName = null;
+      state.activeTab = 'posiciones';
+      render();
+    });
+    document.querySelectorAll('.tf-tab').forEach(btn => {
+      btn.addEventListener('click', () => { state.activeTab = btn.dataset.tab; state.openTeamId=null; render(); });
+    });
+    document.querySelectorAll('[data-team-toggle]').forEach(card => {
+      const toggle = () => {
+        const id = card.dataset.teamToggle;
+        state.openTeamId = state.openTeamId === id ? null : id;
+        render();
+      };
+      card.addEventListener('click', toggle);
+      card.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(); } });
+    });
+    const fab = document.getElementById('tf-admin-fab');
+    if(fab) fab.addEventListener('click', () => openAdminModal(false));
+  }
+
+  /* ---------------- admin ---------------- */
+  function openAdminModal(fromLogin){
+    state.adminOpen = true;
+    state.adminFromLogin = !!fromLogin;
+    render();
+  }
+
+  function closeAdminModal(){
+    state.adminOpen = false;
+    state.adminError = '';
+    if(state.adminFromLogin && !state.currentTeamName){
+      render();
+    } else {
+      render();
+    }
+  }
+
+  function renderAdminModal(){
+    if(!state.adminUnlocked){
+      return `
+        <div class="tf-modal-bg" id="tf-modal-bg">
+          <div class="tf-modal">
+            <button class="tf-modal-close" id="tf-modal-close" aria-label="Cerrar">×</button>
+            <h3>Acceso del organizador</h3>
+            ${state.adminError ? `<div class="tf-error-banner">${esc(state.adminError)}</div>` : ''}
+            <form id="tf-admin-login-form">
+              <div class="tf-field">
+                <label for="tf-admin-pass">Contraseña</label>
+                <input class="tf-input" type="password" id="tf-admin-pass" autocomplete="off" />
+              </div>
+              <button class="tf-btn" type="submit">Entrar</button>
+            </form>
+          </div>
+        </div>
+      `;
+    }
+    return `
+      <div class="tf-modal-bg" id="tf-modal-bg">
+        <div class="tf-modal">
+          <button class="tf-modal-close" id="tf-modal-close" aria-label="Cerrar">×</button>
+          <h3>Panel del organizador</h3>
+          ${state.adminError ? `<div class="tf-error-banner">${esc(state.adminError)}</div>` : ''}
+          <div class="tf-admin-tabs">
+            ${adminTabBtn('equipos','Equipos')}
+            ${adminTabBtn('jugadores','Jugadores')}
+            ${adminTabBtn('resultados','Resultados')}
+            ${adminTabBtn('eliminatorias','Eliminatorias')}
+            ${adminTabBtn('goleadores','Goleadores')}
+          </div>
+          ${state.adminTab==='equipos' ? renderAdminEquipos() : ''}
+          ${state.adminTab==='jugadores' ? renderAdminJugadores() : ''}
+          ${state.adminTab==='resultados' ? renderAdminResultados() : ''}
+          ${state.adminTab==='eliminatorias' ? renderAdminEliminatorias() : ''}
+          ${state.adminTab==='goleadores' ? renderAdminGoleadores() : ''}
+        </div>
+      </div>
+    `;
+  }
+
+  function adminTabBtn(id,label){
+    return `<button class="tf-admin-tab" aria-selected="${state.adminTab===id}" data-admin-tab="${id}">${esc(label)}</button>`;
+  }
+
+  function renderAdminEquipos(){
+    return `
+      <div class="tf-form-row">
+        <input class="tf-input" id="tf-new-team-name" placeholder="Nombre del nuevo equipo" />
+        <button class="tf-mini-btn" id="tf-add-team-btn">Agregar</button>
+      </div>
+      ${state.data.teams.map(t => `
+        <div class="tf-list-row" style="align-items:center;">
+          <div class="tf-avatar-row">
+            ${avatarHTML(t)}
+            <span>${esc(t.name)}</span>
+          </div>
+          <div class="tf-list-row-actions tf-avatar-sm-wrap">
+            <input type="file" accept="image/*" id="tf-photo-input-${t.id}" data-photo-input="${t.id}" style="display:none" />
+            <button class="tf-mini-btn" data-photo-trigger="${t.id}">📷 Foto</button>
+            ${t.photo ? `<button class="tf-mini-btn tf-del" data-del-photo="${t.id}">Quitar foto</button>` : ''}
+            <button class="tf-mini-btn tf-del" data-del-team="${t.id}">Eliminar</button>
+          </div>
+        </div>
+      `).join('') || '<div class="tf-empty">No hay equipos aún</div>'}
+    `;
+  }
+
+  function renderAdminJugadores(){
+    const teams = state.data.teams;
+    if(teams.length===0) return `<div class="tf-empty">Agrega un equipo primero</div>`;
+    const sel = state.adminSelectedTeam || teams[0].id;
+    const team = teamById(sel);
+    return `
+      <div class="tf-form-row">
+        <select class="tf-select" id="tf-jug-team-select">
+          ${teams.map(t => `<option value="${t.id}" ${t.id===sel?'selected':''}>${esc(t.name)}</option>`).join('')}
+        </select>
+      </div>
+      <div class="tf-form-row">
+        <input class="tf-input" style="max-width:70px;flex:0 0 70px;" id="tf-new-player-num" placeholder="#" />
+        <input class="tf-input" id="tf-new-player-name" placeholder="Nombre del jugador" />
+        <button class="tf-mini-btn" id="tf-add-player-btn">Agregar</button>
+      </div>
+      ${(team && team.players.length) ? team.players.map((p,idx) => `
+        <div class="tf-list-row">
+          <span><strong>#${esc(p.number||'-')}</strong> ${esc(p.name)}</span>
+          <div class="tf-list-row-actions">
+            <button class="tf-mini-btn tf-del" data-del-player="${idx}">Eliminar</button>
+          </div>
+        </div>
+      `).join('') : '<div class="tf-empty">Sin jugadores en este equipo</div>'}
+    `;
+  }
+
+  function renderAdminResultados(){
+    return `
+      <p class="tf-section-sub">Edita las estadísticas de cada equipo en la tabla de posiciones.</p>
+      ${state.data.teams.map(t => {
+        const s = standingFor(t.id);
+        return `
+        <div style="border:1px solid var(--line); border-radius:10px; padding:10px 12px; margin-bottom:10px;">
+          <div style="font-weight:800; margin-bottom:8px;">${esc(t.name)}</div>
+          <div class="tf-form-row">
+            ${statInput(t.id,'pj','PJ',s.pj)}${statInput(t.id,'pg','PG',s.pg)}${statInput(t.id,'pe','PE',s.pe)}${statInput(t.id,'pp','PP',s.pp)}
+          </div>
+          <div class="tf-form-row">
+            ${statInput(t.id,'gf','GF',s.gf)}${statInput(t.id,'gc','GC',s.gc)}
+          </div>
+        </div>
+      `}).join('')}
+    `;
+  }
+
+  function statInput(teamId, field, label, value){
+    return `<div style="flex:1;min-width:60px;">
+      <label style="font-size:0.68rem;font-weight:700;opacity:0.6;">${label}</label>
+      <input class="tf-input" type="number" min="0" style="padding:8px;" data-stat-team="${teamId}" data-stat-field="${field}" value="${value||0}" />
+    </div>`;
+  }
+
+  function renderAdminEliminatorias(){
+    return `
+      <p class="tf-section-sub">Agrega los cruces de cada fase y ve avanzando los resultados hasta la final.</p>
+      ${STAGES.map(st => {
+        const matches = state.data.bracket[st.key] || [];
+        return `
+          <div class="tf-bracket-stage">
+            <h4>${esc(st.label)}</h4>
+            ${matches.map(m => `
+              <div class="tf-match-admin-row">
+                <div class="tf-match-admin-teams">
+                  <select class="tf-select" data-match-team="A" data-stage="${st.key}" data-match-id="${m.id}">
+                    ${teamOptionsHTML(m.teamAId)}
+                  </select>
+                  <span class="tf-match-vs">vs</span>
+                  <select class="tf-select" data-match-team="B" data-stage="${st.key}" data-match-id="${m.id}">
+                    ${teamOptionsHTML(m.teamBId)}
+                  </select>
+                </div>
+                <div class="tf-match-admin-scores">
+                  <input class="tf-input" type="number" min="0" placeholder="Marc. A" data-match-score="A" data-stage="${st.key}" data-match-id="${m.id}" value="${m.scoreA ?? ''}" />
+                  <input class="tf-input" type="number" min="0" placeholder="Marc. B" data-match-score="B" data-stage="${st.key}" data-match-id="${m.id}" value="${m.scoreB ?? ''}" />
+                  <select class="tf-select" data-match-winner data-stage="${st.key}" data-match-id="${m.id}">
+                    <option value="">Ganador auto (según marcador)</option>
+                    ${m.teamAId ? `<option value="${m.teamAId}" ${m.winnerId===m.teamAId?'selected':''}>Gana ${esc(teamNameById(m.teamAId))}</option>` : ''}
+                    ${m.teamBId ? `<option value="${m.teamBId}" ${m.winnerId===m.teamBId?'selected':''}>Gana ${esc(teamNameById(m.teamBId))}</option>` : ''}
+                  </select>
+                  <button class="tf-mini-btn tf-del" data-del-match data-stage="${st.key}" data-match-id="${m.id}">Eliminar</button>
+                </div>
+              </div>
+            `).join('') || '<div class="tf-empty">Sin partidos en esta fase</div>'}
+            <button class="tf-mini-btn" data-add-match="${st.key}">Agregar partido a ${esc(st.label.toLowerCase())}</button>
+          </div>
+        `;
+      }).join('')}
+    `;
+  }
+
+  function renderAdminGoleadores(){
+    const teams = state.data.teams;
+    return `
+      <div class="tf-form-row">
+        <input class="tf-input" id="tf-new-scorer-name" placeholder="Nombre del jugador" />
+        <select class="tf-select" id="tf-new-scorer-team">
+          ${teams.map(t => `<option value="${t.id}">${esc(t.name)}</option>`).join('')}
+        </select>
+        <input class="tf-input" type="number" min="0" style="max-width:80px;flex:0 0 80px;" id="tf-new-scorer-goals" placeholder="Goles" value="1" />
+        <button class="tf-mini-btn" id="tf-add-scorer-btn">Agregar</button>
+      </div>
+      ${state.data.scorers.map((s,idx) => `
+        <div class="tf-list-row">
+          <span>${esc(s.player)} — ${esc(teamNameById(s.teamId))} · <strong>${s.goals} goles</strong></span>
+          <div class="tf-list-row-actions">
+            <button class="tf-mini-btn" data-scorer-inc="${idx}">+1</button>
+            <button class="tf-mini-btn tf-del" data-del-scorer="${idx}">Eliminar</button>
+          </div>
+        </div>
+      `).join('') || '<div class="tf-empty">Sin goleadores registrados</div>'}
+    `;
+  }
+
+  function bindAdminEvents(){
+    const bg = document.getElementById('tf-modal-bg');
+    if(bg) bg.addEventListener('click', e => { if(e.target === bg) closeAdminModal(); });
+    const closeBtn = document.getElementById('tf-modal-close');
+    if(closeBtn) closeBtn.addEventListener('click', closeAdminModal);
+
+    const loginForm = document.getElementById('tf-admin-login-form');
+    if(loginForm){
+      loginForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const val = document.getElementById('tf-admin-pass').value;
+        if(val === ADMIN_PASS){
+          state.adminUnlocked = true;
+          state.adminError = '';
+        } else {
+          state.adminError = 'Contraseña incorrecta';
+        }
+        render();
+      });
+    }
+
+    document.querySelectorAll('[data-admin-tab]').forEach(btn => {
+      btn.addEventListener('click', () => { state.adminTab = btn.dataset.adminTab; render(); });
+    });
+
+    // equipos
+    const addTeamBtn = document.getElementById('tf-add-team-btn');
+    if(addTeamBtn){
+      addTeamBtn.addEventListener('click', async () => {
+        const input = document.getElementById('tf-new-team-name');
+        const name = input.value.trim();
+        if(!name) return;
+        const id = uid('t');
+        state.data.teams.push({ id, name, players: [], photo: null });
+        state.data.standings.push({ teamId:id, pj:0,pg:0,pe:0,pp:0,gf:0,gc:0 });
+        await saveData();
+        render();
+      });
+    }
+    // foto de equipo
+    document.querySelectorAll('[data-photo-trigger]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const input = document.getElementById('tf-photo-input-' + btn.dataset.photoTrigger);
+        if(input) input.click();
+      });
+    });
+    document.querySelectorAll('[data-photo-input]').forEach(input => {
+      input.addEventListener('change', async () => {
+        const file = input.files && input.files[0];
+        if(!file) return;
+        const teamId = input.dataset.photoInput;
+        try{
+          const dataUrl = await resizeImageFile(file, 300);
+          const t = teamById(teamId);
+          if(t){ t.photo = dataUrl; }
+          state.adminError = '';
+          await saveData();
+          render();
+        }catch(err){
+          state.adminError = 'No se pudo cargar la foto. Intenta con otra imagen.';
+          render();
+        }
+      });
+    });
+    document.querySelectorAll('[data-del-photo]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const t = teamById(btn.dataset.delPhoto);
+        if(t){ t.photo = null; }
+        await saveData();
+        render();
+      });
+    });
+
+    document.querySelectorAll('[data-del-team]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const id = btn.dataset.delTeam;
+        state.data.teams = state.data.teams.filter(t => t.id !== id);
+        state.data.standings = state.data.standings.filter(s => s.teamId !== id);
+        state.data.scorers = state.data.scorers.filter(s => s.teamId !== id);
+        await saveData();
+        render();
+      });
+    });
+
+    // jugadores
+    const teamSel = document.getElementById('tf-jug-team-select');
+    if(teamSel){
+      teamSel.addEventListener('change', () => { state.adminSelectedTeam = teamSel.value; render(); });
+    }
+    const addPlayerBtn = document.getElementById('tf-add-player-btn');
+    if(addPlayerBtn){
+      addPlayerBtn.addEventListener('click', async () => {
+        const teamId = document.getElementById('tf-jug-team-select').value;
+        const num = document.getElementById('tf-new-player-num').value.trim();
+        const name = document.getElementById('tf-new-player-name').value.trim();
+        if(!name) return;
+        const t = teamById(teamId);
+        t.players.push({ number:num, name });
+        state.adminSelectedTeam = teamId;
+        await saveData();
+        render();
+      });
+    }
+    document.querySelectorAll('[data-del-player]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const teamId = document.getElementById('tf-jug-team-select').value;
+        const t = teamById(teamId);
+        t.players.splice(parseInt(btn.dataset.delPlayer,10),1);
+        state.adminSelectedTeam = teamId;
+        await saveData();
+        render();
+      });
+    });
+
+    // resultados
+    document.querySelectorAll('[data-stat-team]').forEach(inp => {
+      inp.addEventListener('change', async () => {
+        const s = standingFor(inp.dataset.statTeam);
+        s[inp.dataset.statField] = Math.max(0, parseInt(inp.value,10) || 0);
+        await saveData();
+        render();
+      });
+    });
+
+    // eliminatorias
+    document.querySelectorAll('[data-add-match]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const stage = btn.dataset.addMatch;
+        state.data.bracket[stage].push({ id: uid('m'), teamAId:null, teamBId:null, scoreA:null, scoreB:null, winnerId:null });
+        await saveData();
+        render();
+      });
+    });
+    document.querySelectorAll('[data-del-match]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const stage = btn.dataset.stage;
+        state.data.bracket[stage] = state.data.bracket[stage].filter(m => m.id !== btn.dataset.matchId);
+        await saveData();
+        render();
+      });
+    });
+    document.querySelectorAll('[data-match-team]').forEach(sel => {
+      sel.addEventListener('change', async () => {
+        const m = findMatch(sel.dataset.stage, sel.dataset.matchId);
+        if(!m) return;
+        if(sel.dataset.matchTeam === 'A') m.teamAId = sel.value || null;
+        else m.teamBId = sel.value || null;
+        m.winnerId = null;
+        await saveData();
+        render();
+      });
+    });
+    document.querySelectorAll('[data-match-score]').forEach(inp => {
+      inp.addEventListener('change', async () => {
+        const m = findMatch(inp.dataset.stage, inp.dataset.matchId);
+        if(!m) return;
+        const val = inp.value === '' ? null : Math.max(0, parseInt(inp.value,10) || 0);
+        if(inp.dataset.matchScore === 'A') m.scoreA = val;
+        else m.scoreB = val;
+        await saveData();
+        render();
+      });
+    });
+    document.querySelectorAll('[data-match-winner]').forEach(sel => {
+      sel.addEventListener('change', async () => {
+        const m = findMatch(sel.dataset.stage, sel.dataset.matchId);
+        if(!m) return;
+        m.winnerId = sel.value || null;
+        await saveData();
+        render();
+      });
+    });
+
+    // goleadores
+    const addScorerBtn = document.getElementById('tf-add-scorer-btn');
+    if(addScorerBtn){
+      addScorerBtn.addEventListener('click', async () => {
+        const player = document.getElementById('tf-new-scorer-name').value.trim();
+        const teamId = document.getElementById('tf-new-scorer-team').value;
+        const goals = Math.max(0, parseInt(document.getElementById('tf-new-scorer-goals').value,10) || 0);
+        if(!player) return;
+        state.data.scorers.push({ player, teamId, goals });
+        await saveData();
+        render();
+      });
+    }
+    document.querySelectorAll('[data-scorer-inc]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const idx = parseInt(btn.dataset.scorerInc,10);
+        state.data.scorers[idx].goals = (state.data.scorers[idx].goals||0) + 1;
+        await saveData();
+        render();
+      });
+    });
+    document.querySelectorAll('[data-del-scorer]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const idx = parseInt(btn.dataset.delScorer,10);
+        state.data.scorers.splice(idx,1);
+        await saveData();
+        render();
+      });
+    });
+  }
+
+  const originalRender = render;
+  render = function(){
+    originalRender();
+    if(state.adminOpen) bindAdminEvents();
+  };
+
+  loadData();
+})();
+</script>
